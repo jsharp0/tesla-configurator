@@ -16,4 +16,11 @@ export class StepService {
     this.stepOneComplete.set(!!localStorage.getItem('step-one'));
     this.stepTwoComplete.set(!!localStorage.getItem('step-two'));
   }
+
+  clearStepProgress() {
+    localStorage.removeItem('step-one');
+    localStorage.removeItem('step-two');
+    this.stepOneComplete.set(false);
+    this.stepTwoComplete.set(false);
+  }
 }

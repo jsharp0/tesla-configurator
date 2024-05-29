@@ -30,11 +30,6 @@ export class ModelService {
     localStorage.setItem('selectedModel', JSON.stringify(model));
   }
 
-  resetColor() {
-    this.selectedColor.next(null);
-    localStorage.removeItem('selectedColor');
-  }
-
   saveColorDetails(color: Color): void {
     this.selectedColor.next(color);
     localStorage.setItem('selectedColor', JSON.stringify(color));
@@ -61,5 +56,13 @@ export class ModelService {
       color: color ? (JSON.parse(color) as Color) : undefined,
       options: options ? (JSON.parse(options) as SavedOptions) : undefined,
     };
+  }
+
+  clearAllSavedInfo() {
+    localStorage.removeItem('selectedModel');
+    localStorage.removeItem('selectedColor');
+    localStorage.removeItem('options');
+    this.selectedModel.next(null);
+    this.selectedColor.next(null);
   }
 }

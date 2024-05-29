@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModelService } from '../services/model.service';
 import { CurrencyPipe, UpperCasePipe } from '@angular/common';
+import { StepService } from '../services/step.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tesla-step-one',
@@ -33,15 +35,19 @@ import { CurrencyPipe, UpperCasePipe } from '@angular/common';
         <td>{{ 'Total cost' | uppercase }}</td>
         <td>{{ totalCost | currency }}</td>
       </tr>
-    </table> `,
+    </table>
+
+    <button (click)="resetProgress()">Start over</button>`,
 })
-export class StepThreeComponent implements OnInit {
+export class StepThreeComponent {
   savedInfo = this.modelService.getSavedInfo();
   totalCost = this.calculateTotalCost();
 
-  constructor(private modelService: ModelService) {}
-
-  ngOnInit() {}
+  constructor(
+    private modelService: ModelService,
+    private stepService: StepService,
+    private router: Router
+  ) {}
 
   private calculateTotalCost() {
     let cost = 0;
@@ -57,5 +63,11 @@ export class StepThreeComponent implements OnInit {
       }
     }
     return cost;
+  }
+
+  resetProgress() {
+    this.modelService.clearAllSavedInfo();
+    this.stepService.clearStepProgress();
+    this.router.navigate(['/step-one']);
   }
 }

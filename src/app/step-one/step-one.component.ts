@@ -67,7 +67,6 @@ export class StepOneComponent implements OnInit {
 
       if (selectedModel) {
         this.modelService.saveModelDetails(selectedModel);
-        this.modelService.resetColor();
       }
 
       if (selectedColor) {
@@ -76,7 +75,7 @@ export class StepOneComponent implements OnInit {
 
       if (this.modelInformation.valid) {
         this.stepService.saveStepProgress('one');
-      }
+      } 
     });
   }
 }
