@@ -30,6 +30,11 @@ export class ModelService {
     localStorage.setItem('selectedModel', JSON.stringify(model));
   }
 
+  resetColor() {
+    this.selectedColor.next(null);
+    localStorage.removeItem('selectedColor');
+  }
+
   saveColorDetails(color: Color): void {
     this.selectedColor.next(color);
     localStorage.setItem('selectedColor', JSON.stringify(color));

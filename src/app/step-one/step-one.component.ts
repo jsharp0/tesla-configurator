@@ -67,6 +67,7 @@ export class StepOneComponent implements OnInit {
 
       if (selectedModel) {
         this.modelService.saveModelDetails(selectedModel);
+        this.modelService.resetColor();
       }
 
       if (selectedColor) {
