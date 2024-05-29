@@ -1,0 +1,18 @@
+ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+
+    li {
+        border: 1px solid white;
+        &:hover {
+            background-color: rgba(255,255,255, 0.2);
+            cursor: pointer;
+        }
+    }
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
