@@ -11,34 +11,60 @@ import { combineLatest, map } from 'rxjs';
   standalone: true,
   styleUrl: 'app.component.scss',
   imports: [FormsModule, RouterOutlet, RouterModule, AsyncPipe],
-  template: ` <nav>
+  template: `
+    <nav>
       <ul>
-        <li><a routerLink="step-one">Step 1</a></li>
+        <li><a routerLink="step-one" id="step1">Step 1</a></li>
         <li>
-          <a routerLink="step-two" [class.disabled]="!stepOneComplete()">Step 2</a>
+          <a
+            routerLink="step-two"
+            [class.disabled]="!stepOneComplete()"
+            id="step2"
+            >Step 2</a
+          >
         </li>
-        <li><a routerLink="step-three" [class.disabled]="!stepTwoComplete()">Step 3</a></li>
+        <li>
+          <a
+            routerLink="step-three"
+            [class.disabled]="!stepTwoComplete()"
+            id="step3"
+            >Step 3</a
+          >
+        </li>
       </ul>
     </nav>
     <router-outlet />
 
-    @if (selectedInfo$ | async; as selectedInfo) {
-      @if (selectedInfo.color && selectedInfo.model) {
-      <img [src]="'https://interstate21.com/tesla-app/images/' + selectedInfo.model.code + '/'+ selectedInfo.color.code  +'.jpg'" />
-      }
-    }
-    `,
+    @if (selectedInfo$ | async; as selectedInfo) { @if (selectedInfo.color &&
+    selectedInfo.model) {
+    <img
+      [src]="
+        'https://interstate21.com/tesla-app/images/' +
+        selectedInfo.model.code +
+        '/' +
+        selectedInfo.color.code +
+        '.jpg'
+      "
+    />
+    } }
+  `,
   providers: [],
 })
 export class AppComponent implements OnInit {
   stepOneComplete = this.stepService.stepOneComplete;
   stepTwoComplete = this.stepService.stepTwoComplete;
-  selectedInfo$ = combineLatest([this.modelService.selectedModel, this.modelService.selectedColor]).pipe(map(([model, color]) => ({model, color})))
+  selectedInfo$ = combineLatest([
+    this.modelService.selectedModel,
+    this.modelService.selectedColor,
+  ]).pipe(map(([model, color]) => ({ model, color })));
 
-  constructor(private stepService: StepService, private modelService: ModelService) {}
+  constructor(
+    private stepService: StepService,
+    private modelService: ModelService
+  ) {}
 
   ngOnInit(): void {
-    this.stepService.getStepProgress()
+    this.stepService.getStepProgress();
     this.modelService.getSavedInfo();
   }
 }
